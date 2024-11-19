@@ -1,0 +1,3 @@
+function selectBestCountry() {
+  return 'Argentina';
+}
