@@ -1,0 +1,1 @@
+import { selectBestCountry} from './script';
