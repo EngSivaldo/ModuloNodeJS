@@ -14,6 +14,13 @@ function selectBestCountry() {
 global.console.log('Ola,feliz ano novo!');
 
 
+const path = require('node:path');
+
+
+const pathObj = path.parse(module.filename);
+console.log(pathObj);
+
+
 //modo de importar commonJS(padrão)
-const script3 = require('./script3');
-console.log(script3.BestCountry());
+// const script3 = require('./script3');
+// console.log(script3.BestCountry());
