@@ -8,8 +8,8 @@ class SistemaLogin extends EventEmitter {
   constructor() {
     super();
     this.logs = []; //lista de dados(logs) - objeto
+    this.intervalId = null;
     this.iniciarRelatorioDiario();
-
   }
   //registra todos os eventos emitidos, como login, logout e error
   registrarEvento(evento, mensagem) {
@@ -23,16 +23,24 @@ class SistemaLogin extends EventEmitter {
   }
   //Relatório diário - evento dailyLogReport - 5 segundos
   iniciarRelatorioDiario() {
-    setInterval(() => {
+    this.intervalId = setInterval(() => {
       this.emit('dailyLogReport', this.logs);
       this.logs = [];//limpar os logs após o relatório
 
-    }, 5000);
+    }, 5000);//gera loop infinito
+
+  }
+  //metodo para para o relatório diário
+  pararRelatorio() {
+    if (this.intervalId) {
+      clearInterval(this.intervalId);//interromper o setInterval em loop infinito
+      console.log('Relatório diário interrompido!');
+
+    }
 
   }
 
 }
-
 
 //Escutar evento eventoRegistrado
 const sistema = new SistemaLogin();
@@ -55,6 +63,11 @@ sistema.registrarEvento('logout', 'usuário admin fez logout');
 sistema.registrarEvento('error', 'Error ao carregar');
 
 
+//Interromper o nosso sistema
+setTimeout(() => {
+  sistema.pararRelatorio();
+
+}, 9000);
 
 
 
