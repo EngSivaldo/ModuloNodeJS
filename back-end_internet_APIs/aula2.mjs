@@ -9,6 +9,10 @@ const server = http.createServer();
 
 // Adiciona um listener para o evento 'request' do servidor
 server.addListener("request", (request, response) => {
+
+
+
+
   // Define o cabeçalho da resposta com o status 200 (OK) e o tipo de conteúdo como JSON
   response.writeHead(200, { "Content-Type": "application/json" });
   
@@ -21,6 +25,3 @@ server.addListener("request", (request, response) => {
 
 // Faz o servidor escutar na porta 8000
 server.listen(8000);
-
-
-
