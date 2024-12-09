@@ -2,7 +2,7 @@
 import http from "node:http";
 
 // Importa o módulo 'path' do Node.js
-import resolve from "node:path";
+// import resolve from "node:path";
 
 // Cria um servidor HTTP
 const server = http.createServer();
