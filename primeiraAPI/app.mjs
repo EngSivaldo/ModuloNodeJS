@@ -1,23 +1,23 @@
-import http from "node:http";
-import { stock }  from "./stock.mjs"; // Verifique a importação de acordo de como está a estrutura do seu computador
+import http from "node:http"; // Importa o módulo HTTP do Node.js
+import { stock } from "./stock.mjs"; // Importa o módulo 'stock' (verifique a estrutura do seu projeto para garantir que o caminho está correto)
 
-const server = http.createServer();
+const server = http.createServer(); // Cria um servidor HTTP
 
+// Adiciona um listener para eventos de requisição
 server.addListener("request", (request, response) => {
-    // console.log(request.url);
-  if (request.url === "/") {
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.write(JSON.stringify(stock));
-    // response.write("Olá, impressionador! Está aqui a resposta do seu servidor");
-    response.end();
-  } else if (request.url === "/getUnavailableProducts") {
+  if (request.url === "/") { // Verifica se a URL da requisição é "/"
+    response.writeHead(200, { "Content-Type": "application/json" }); // Define o cabeçalho da resposta com status 200 e tipo de conteúdo JSON
+    response.write(JSON.stringify(stock)); // Converte o objeto 'stock' para JSON e escreve na resposta
+    response.end(); // Encerra a resposta
+  } 
+  if (request.url === "/get-unavailable-products") { // Verifica se a URL da requisição é "/get-unavailable-products"
     const getUnavailableProducts = stock.filter(
-      (product) => product.amountLeft === 0
+      (product) => product.amountLeft === 0 // Filtra os produtos que estão indisponíveis (amountLeft igual a 0)
     );
-    response.writeHead(200, { "Content-Type": "application/json" });
-    response.write(JSON.stringify(getUnavailableProducts));
-    response.end();
+    response.writeHead(200, { "Content-Type": "application/json" }); // Define o cabeçalho da resposta com status 200 e tipo de conteúdo JSON
+    response.write(JSON.stringify(getUnavailableProducts)); // Converte a lista de produtos indisponíveis para JSON e escreve na resposta
+    response.end(); // Encerra a resposta
   }
-});
+  });
 
-server.listen(8000);
+  server.listen(8000); // Faz o servidor escutar na porta 8000
