@@ -24,13 +24,14 @@ server.addListener("request", (request, response) => {
   }
 
   if (urlObject.pathname === '/get-by-id') {
-    const selectedObject = stock.find(product => product.id === Number(urlObject.searchParams.get('id')));
+    const selectedObject = stock.find((product) => product.id === Number(urlObject.searchParams.get('id')));
+    console.log('Olha só como funciona!')
     response.writeHead(200, { "Content-Type": "application/json" }); // Define o cabeçalho da resposta com status 200 e tipo de conteúdo JSON
     response.write(JSON.stringify(selectedObject)); // Converte a lista de produtos indisponíveis para JSON e escreve na resposta
     response.end(); // Encerra a resposta
     
    
-  }
+   }
   });
 
   server.listen(8000); // Faz o servidor escutar na porta 8000
