@@ -15,13 +15,20 @@ server.addListener("request", (request, response) => {
     response.end(); // Encerra a resposta
   } 
 
-  if (urlObject.pathname === "/get-unavailable-products") { // Verifica se a URL é "/get-unavailable-products"
+  if (urlObject.pathname === "/get-unavailable-products" && request.method === 'GET') { // Verifica se a URL é "/get-unavailable-products"
     const getUnavailableProducts = stock.filter(
       (product) => product.amountLeft === 0 // Filtra produtos indisponíveis
     );
     response.writeHead(200, { "Content-Type": "application/json" }); // Cabeçalho da resposta
     response.write(JSON.stringify(getUnavailableProducts)); // Responde com produtos indisponíveis
     response.end(); // Encerra a resposta
+  }
+  if (urlObject.pathname === "/get-unavailable-products" && request.method === 'POST') {
+    response.writeHead(405, {'Content-Type': 'text/plain'});
+    response.write('Este endpoint não permite acesso por meio de requisições POST!')
+    response.end();
+    return;
+
   }
 
   // Tratar erros na requisição
