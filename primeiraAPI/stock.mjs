@@ -1,4 +1,4 @@
-export let stock = [
+export const stock = [
   {
     id: 0,
     productName: "Sofá",

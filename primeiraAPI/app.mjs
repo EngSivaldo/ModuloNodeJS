@@ -3,6 +3,7 @@ import { stock } from "./stock.mjs"; // Importa o módulo 'stock'
 import { URL } from "node:url"; // Importa o módulo URL
 
 const server = http.createServer(); // Cria um servidor HTTP
+let productStock = [...stock]
 
 // Listener para eventos de requisição
 server.addListener("request", (request, response) => {
@@ -11,14 +12,14 @@ server.addListener("request", (request, response) => {
 
   if (urlObject.pathname === "/") { // Verifica se a URL é "/"
     response.writeHead(200, { "Content-Type": "application/json" }); // Cabeçalho da resposta
-    response.write(JSON.stringify(stock)); // Responde com 'stock' em JSON
+    response.write(JSON.stringify(productStock)); // Responde com 'productStock' em JSON
     response.end(); // Encerra a resposta
   } 
 //Tratamento para o metodo GET--------------------------------------------
 
 
   if (urlObject.pathname === "/get-unavailable-products" && request.method === 'GET') { // Verifica se a URL é "/get-unavailable-products"
-    const getUnavailableProducts = stock.filter(
+    const getUnavailableProducts = productStock.filter(
       (product) => product.amountLeft === 0 // Filtra produtos indisponíveis
     );
     response.writeHead(200, { "Content-Type": "application/json" }); // Cabeçalho da resposta
@@ -43,7 +44,7 @@ server.addListener("request", (request, response) => {
       response.end(); // Encerra a resposta
       return;
     }
-    const selectedObject = stock.find((product) => product.id === Number(idParam));
+    const selectedObject = productStock.find((product) => product.id === Number(idParam));
 
     if (!selectedObject) { // Verifica se o produto existe
       response.writeHead(404, { "Content-Type": "text/plain" }); // Cabeçalho da resposta
@@ -57,8 +58,8 @@ server.addListener("request", (request, response) => {
     response.end(); // Encerra a resposta
     return;
   }
-
-  if (urlObject.pathname === '/delete-by-id') {
+//endpoint do tipo delete
+  if (urlObject.pathname === '/delete-by-id' && request.method === 'DELETE') {
     const idParam = urlObject.searchParams.get('id');
     if (!idParam || isNaN(idParam)) { // Verifica se o ID é válido
       response.writeHead(400, { "Content-Type": "text/plain" }); // Cabeçalho da resposta
@@ -66,9 +67,16 @@ server.addListener("request", (request, response) => {
       response.end(); // Encerra a resposta
       return;
     }
-    const selectedObject = stock.find((product) => product.id === Number(idParam));
+    const selectedObject = productStock.find(
+      (product) => product.id === Number(idParam));
 
+    productStock = productStock.filter(product => product.id !== Number(idParam));
+
+    response.writeHead(200, { "Content-Type": "application/json" }); // Cabeçalho da resposta
+    response.write(JSON.stringify(selectedObject?? {})); // Responde com o produto selecionado
+    response.end(); // Encerra a resposta
+    return;
   }
 });
 
-server.listen(8000); // Servidor escuta na porta 8000
+server.listen(8001); // Servidor escuta na porta 8000
