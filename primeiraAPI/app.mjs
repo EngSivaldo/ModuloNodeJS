@@ -14,6 +14,8 @@ server.addListener("request", (request, response) => {
     response.write(JSON.stringify(stock)); // Responde com 'stock' em JSON
     response.end(); // Encerra a resposta
   } 
+//Tratamento para o metodo GET--------------------------------------------
+
 
   if (urlObject.pathname === "/get-unavailable-products" && request.method === 'GET') { // Verifica se a URL é "/get-unavailable-products"
     const getUnavailableProducts = stock.filter(
@@ -23,6 +25,7 @@ server.addListener("request", (request, response) => {
     response.write(JSON.stringify(getUnavailableProducts)); // Responde com produtos indisponíveis
     response.end(); // Encerra a resposta
   }
+  //Tratamento para o metodo POST----------------------------------------
   if (urlObject.pathname === "/get-unavailable-products" && request.method === 'POST') {
     response.writeHead(405, {'Content-Type': 'text/plain'});
     response.write('Este endpoint não permite acesso por meio de requisições POST!')
@@ -40,8 +43,8 @@ server.addListener("request", (request, response) => {
       response.end(); // Encerra a resposta
       return;
     }
-
     const selectedObject = stock.find((product) => product.id === Number(idParam));
+
     if (!selectedObject) { // Verifica se o produto existe
       response.writeHead(404, { "Content-Type": "text/plain" }); // Cabeçalho da resposta
       response.write("ID inválido! Não existe um produto com esse ID"); // Mensagem de erro
@@ -53,6 +56,18 @@ server.addListener("request", (request, response) => {
     response.write(JSON.stringify(selectedObject)); // Responde com o produto selecionado
     response.end(); // Encerra a resposta
     return;
+  }
+
+  if (urlObject.pathname === '/delete-by-id') {
+    const idParam = urlObject.searchParams.get('id');
+    if (!idParam || isNaN(idParam)) { // Verifica se o ID é válido
+      response.writeHead(400, { "Content-Type": "text/plain" }); // Cabeçalho da resposta
+      response.write("ID inválido! O ID deve ser um número. Por favor, tente novamente."); // Mensagem de erro
+      response.end(); // Encerra a resposta
+      return;
+    }
+    const selectedObject = stock.find((product) => product.id === Number(idParam));
+
   }
 });
 
