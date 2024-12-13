@@ -1,0 +1,22 @@
+{
+  "name": "api-stock",
+  "version": "1.0.0",
+  "description": "API desenvolvida no curso JavaScrip Impressionador da hashtag Treinamentos",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "node --watch ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EngSivaldo/ModuloNodeJs.git"
+  },
+  "author": "Sivaldo Vieira",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/EngSivaldo/ModuloNodeJs/issues"
+  },
+  "homepage": "https://github.com/EngSivaldo/ModuloNodeJs#readme",
+  "type": "module"
+
+}

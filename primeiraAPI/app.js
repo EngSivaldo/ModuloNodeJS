@@ -1,5 +1,5 @@
 import http from "node:http"; // Importa o módulo HTTP
-import { stock } from "./stock.mjs"; // Importa o módulo 'stock'
+import { stock } from "./stock.js"; // Importa o módulo 'stock'
 import { URL } from "node:url"; // Importa o módulo URL
 
 const server = http.createServer(); // Cria um servidor HTTP
@@ -79,4 +79,4 @@ server.addListener("request", (request, response) => {
   }
 });
 
-server.listen(8001); // Servidor escuta na porta 8000
+server.listen(8002); // Servidor escuta na porta 8000
