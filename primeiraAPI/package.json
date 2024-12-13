@@ -17,6 +17,8 @@
     "url": "https://github.com/EngSivaldo/ModuloNodeJs/issues"
   },
   "homepage": "https://github.com/EngSivaldo/ModuloNodeJs#readme",
-  "type": "module"
-
+  "type": "module",
+  "dependencies": {
+    "body": "^5.1.0"
+  }
 }

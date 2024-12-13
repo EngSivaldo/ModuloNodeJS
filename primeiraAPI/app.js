@@ -1,6 +1,7 @@
 import http from "node:http"; // Importa o módulo HTTP
 import { stock } from "./stock.js"; // Importa o módulo 'stock'
 import { URL } from "node:url"; // Importa o módulo URL
+import  jsonBody from 'body/json.js'
 
 const server = http.createServer(); // Cria um servidor HTTP
 let productStock = [...stock]
@@ -77,6 +78,35 @@ server.addListener("request", (request, response) => {
     response.end(); // Encerra a resposta
     return;
   }
+
+  if (urlObject.pathname === '/create' && request.method === 'POST') {
+    jsonBody(request, response, (error, body) => {
+
+      // verificar se esta tudo ok com a requisicao
+      if (error) {
+        response.writeHead(400, {'Content-Type': 'text/plain' });
+        response.write('Erro ao processar a requisição. ');
+        response.write(error.message);
+        response.end();
+      }
+   
+      //implementar lógica de adição do novo produto ao estoque
+      const { productName, amountLeft } = body;
+      const newProduct = {
+        id: productStock.length,
+        productName: productName,
+        amountLeft: amountLeft
+      };
+      productStock.push(newProduct);   
+      //retornar novo produto
+      response.writeHead(200, { 'Content-Type': 'application/json'});
+      response.write(JSON.stringify(newProduct));
+      response.end();
+      return;
+
+    })
+  }
+
 });
 
 server.listen(8002); // Servidor escuta na porta 8000
