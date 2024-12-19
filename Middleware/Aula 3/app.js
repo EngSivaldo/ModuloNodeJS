@@ -1,17 +1,20 @@
 import express from 'express';
-import usersRouter from './routes/users.js';
-import postsRouter from './routes/posts.js';
+import usersRouter from './routes/users.js'
+import postsRouter from './routes/posts.js'
 
 const app = express();
 
 app.use(registerRequest);
 app.use(registerOnDatabase);
 app.use('/users', usersRouter);
-app.use('/posts', postsRouter);
+app.use('/posts',postsRouter);
 
 app.get('/', (req, res) => {
   res.status(200).send('Olá, Impressionador!');
 });
+
+
+
 
 app.listen(5000, () => console.log('api rodando com sucesso'));
 
