@@ -2,6 +2,8 @@
 import express from 'express';
 import usersRouter from './routes/users.js';
 import postsRouter from './routes/posts.js';
+import helmet from 'helmet';
+
 
 // Criação da instância da aplicação Express
 const app = express();
@@ -10,11 +12,12 @@ const app = express();
 app.use(registerRequest);
 
 // Middleware para simular o acesso ao banco de dados e registrar transações
-// app.use(registerOnDatabase);
+app.use(registerOnDatabase);
 
 // Middleware para converter JSON no corpo da solicitação em objeto JavaScript
 app.use(express.json()); // Converter JSON para objeto JavaScript
 
+app.use(helmet());
 // Definição das rotas para '/users' e '/posts' usando os roteadores importados
 app.use('/users', usersRouter);
 app.use('/posts', postsRouter);
@@ -34,6 +37,12 @@ function registerRequest(req, res, next) {
   next();
 }
 
+// Função middleware para simular o acesso ao banco de dados e registrar uma transação
+function registerOnDatabase(req, res, next) {
+  console.log('Acessando banco de dados');
+  console.log('Registrando transação');
+  next();
+}
 
 
 // Explicação

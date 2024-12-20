@@ -5,8 +5,6 @@ import { posts } from '../data.js';
 // Criação de um roteador usando o Express
 const router = express.Router();
 
-router.use(registerOnDatabase);
-
 
 // Definição das rotas para o endpoint raiz ('/')
 router
